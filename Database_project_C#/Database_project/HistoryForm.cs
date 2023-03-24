@@ -18,6 +18,7 @@ namespace Database_project
         static string conn = ConfigurationManager.ConnectionStrings["justDatabase"].ConnectionString;
         SqlConnection sqlConnection = DatabaseSingleton.GetInstance();
 
+        int temp = 0;
         private MyUser user;
 
         public History(MyUser user)
@@ -47,6 +48,8 @@ namespace Database_project
                 listOfMessages.Items.Add(item);
             }
             reader.Close();
+
+            LoadHistory.Enabled = false;
         }
 
         private void listOfMessages_SelectedIndexChanged(object sender, EventArgs e)
@@ -65,7 +68,7 @@ namespace Database_project
             reader = command.ExecuteReader();
             while (reader.Read())
             {
-                output = output +"MessageId : "+reader.GetValue(0)+ " SenderId : " + reader.GetValue(1)+ " Subject : " + reader.GetValue(2) + " Body : " + reader.GetValue(3) + " Date : " + reader.GetValue(4) + " Receiver : " + reader.GetValue(5) +"\n";
+                output = output + "MessageId : " + reader.GetValue(0) + " SenderId : " + reader.GetValue(1) + " Subject : " + reader.GetValue(2) + " Body : " + reader.GetValue(3) + " Date : " + reader.GetValue(4) + " Receiver : " + reader.GetValue(5) + "\n";
 
 
             }
@@ -75,30 +78,60 @@ namespace Database_project
                 listOfRecievedMessages.Items.Add(item);
             }
             reader.Close();
+
+            loadRecievedMessages.Enabled = false;
         }
-        //deleting records from database
         private void DeleteMessages_Click(object sender, EventArgs e)
         {
-            foreach(string item in listOfMessages.CheckedItems) {
-                
-                string[] inputLines = item.Split('\n');
-                string[] columnNames = inputLines[0].Split('\t');
-                string[] dataValues = inputLines[0].Split('\t');
+            if (listOfMessages.CheckedItems.Count > 0)
+            {
+                // Loop through the checked items
+                foreach (var item in listOfMessages.CheckedItems)
+                {
+                    string checkedItem = item.ToString();
 
-                int senderId = int.Parse(dataValues[Array.IndexOf(columnNames, "SenderId")]);
+                    int index = checkedItem.IndexOf("MessageId : ");
 
-                MessageBox.Show("SenderId: " + senderId);
-                string query = "Delete from Recepients where SenderId = " + senderId + "";
+                    if (index != -1)
+                    {
+                        string number = checkedItem.Substring(index + 12);
 
-                SqlCommand command = new SqlCommand(query, sqlConnection);
-                SqlDataAdapter adapter = new SqlDataAdapter();
+                        int spaceIndex = number.IndexOf(" ");
 
-                adapter.InsertCommand = command;
-                adapter.InsertCommand.ExecuteNonQuery();
+                        if (spaceIndex != -1)
+                        {
+                            // Get the number before " "
+                            number = number.Substring(0, spaceIndex);
+                            MessageBox.Show(number);
+                        }
 
-                command.Dispose();
+
+                        int messageId = int.Parse(number);
+
+                        string query = "Delete FROM Recipients WHERE UserId = " + user.ID + " AND MessageId = " + messageId;
+
+                        SqlCommand command = new SqlCommand(query, sqlConnection);
+                        command.ExecuteNonQuery();
+
+
+                        MessageBox.Show("Message/s deleted succesfully");
+                    }
+                }
             }
-          
+
+        }
+
+        private void listOfRecievedMessages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void backToMainMenu_Click(object sender, EventArgs e)
+        {
+            MainPageForm mainPage = new MainPageForm(user);
+            mainPage.Show();
+            Visible = false;
         }
     }
 }
+

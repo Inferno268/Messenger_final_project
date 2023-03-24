@@ -165,6 +165,8 @@ namespace Database_project
             }
             reader.Close();
 
+            LoadUsers.Enabled = false;
+
         }
 
         private void MessageHistory_Click(object sender, EventArgs e)

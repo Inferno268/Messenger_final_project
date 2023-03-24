@@ -33,6 +33,7 @@
             DeleteMessages = new Button();
             listOfRecievedMessages = new CheckedListBox();
             loadRecievedMessages = new Button();
+            backToMainMenu = new Button();
             SuspendLayout();
             // 
             // LoadHistory
@@ -57,9 +58,9 @@
             // 
             // DeleteMessages
             // 
-            DeleteMessages.Location = new Point(589, 388);
+            DeleteMessages.Location = new Point(621, 388);
             DeleteMessages.Name = "DeleteMessages";
-            DeleteMessages.Size = new Size(174, 52);
+            DeleteMessages.Size = new Size(142, 50);
             DeleteMessages.TabIndex = 2;
             DeleteMessages.Text = "Delete messages";
             DeleteMessages.UseVisualStyleBackColor = true;
@@ -73,6 +74,7 @@
             listOfRecievedMessages.Name = "listOfRecievedMessages";
             listOfRecievedMessages.Size = new Size(322, 292);
             listOfRecievedMessages.TabIndex = 3;
+            listOfRecievedMessages.SelectedIndexChanged += listOfRecievedMessages_SelectedIndexChanged;
             // 
             // loadRecievedMessages
             // 
@@ -84,11 +86,22 @@
             loadRecievedMessages.UseVisualStyleBackColor = true;
             loadRecievedMessages.Click += loadRecievedMessages_Click;
             // 
+            // backToMainMenu
+            // 
+            backToMainMenu.Location = new Point(441, 388);
+            backToMainMenu.Name = "backToMainMenu";
+            backToMainMenu.Size = new Size(159, 50);
+            backToMainMenu.TabIndex = 5;
+            backToMainMenu.Text = "Main Menu";
+            backToMainMenu.UseVisualStyleBackColor = true;
+            backToMainMenu.Click += backToMainMenu_Click;
+            // 
             // History
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(backToMainMenu);
             Controls.Add(loadRecievedMessages);
             Controls.Add(listOfRecievedMessages);
             Controls.Add(DeleteMessages);
@@ -106,5 +119,6 @@
         private Button DeleteMessages;
         private CheckedListBox listOfRecievedMessages;
         private Button loadRecievedMessages;
+        private Button backToMainMenu;
     }
 }
