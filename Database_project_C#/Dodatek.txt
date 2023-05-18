@@ -1,1 +1,0 @@
-Projekt mi z ničeho nic přestal fungovat, idkyž jsem nic neměnil a pouze jsem spustil program aby jsem otestoval funkci na mazání zpráv. Nevím tedy jestli vám půjde projekt spustit nebo ne. Error se objevil při posílání zpráv. Zprávy se přestaly posílat do databáze a nevím jak to spravit, když jsem tam nezměnil ani řádek a přestalo to fungovat.
